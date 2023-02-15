@@ -1,0 +1,127 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017NP4O-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/0.1
+ encapsulation dot1Q 306
+ ip address 172.17.68.193 255.255.255.224
+!
+interface FastEthernet0/0.2
+ encapsulation dot1Q 307
+ ip address 172.17.68.129 255.255.255.192
+!
+interface FastEthernet0/0.3
+ encapsulation dot1Q 308
+ ip address 172.17.68.1 255.255.255.128
+!
+interface FastEthernet0/0.4
+ encapsulation dot1Q 309
+ ip address 172.17.68.225 255.255.255.240
+!
+interface FastEthernet0/0.5
+ encapsulation dot1Q 310
+ ip address 172.17.68.241 255.255.255.240
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router rip
+!
+ip classless
+ip route 172.17.64.0 255.255.255.128 172.17.64.1 
+ip route 172.17.64.128 255.255.255.128 172.17.64.129 
+ip route 172.17.65.0 255.255.255.128 172.17.65.1 
+ip route 172.17.65.128 255.255.255.128 172.17.65.129 
+ip route 172.17.66.0 255.255.255.192 172.17.66.1 
+ip route 172.17.66.64 255.255.255.192 172.17.66.65 
+ip route 172.17.68.0 255.255.255.128 172.17.68.1 
+ip route 172.17.68.128 255.255.255.192 172.17.68.129 
+ip route 172.17.68.192 255.255.255.224 172.17.68.193 
+ip route 172.17.68.224 255.255.255.240 172.17.68.225 
+ip route 172.17.68.240 255.255.255.240 172.17.68.241 
+ip route 172.17.69.0 255.255.255.192 172.17.69.1 
+ip route 172.17.69.64 255.255.255.192 172.17.69.65 
+ip route 172.17.69.128 255.255.255.192 172.17.69.129 
+ip route 172.17.69.192 255.255.255.224 172.17.69.193 
+ip route 172.17.69.224 255.255.255.224 172.17.69.225 
+ip route 172.17.70.0 255.255.255.128 172.17.70.1 
+ip route 172.17.70.128 255.255.255.192 172.17.70.129 
+ip route 172.17.70.192 255.255.255.224 172.17.70.193 
+ip route 172.17.70.224 255.255.255.240 172.17.70.225 
+ip route 172.17.70.240 255.255.255.240 172.17.70.241 
+ip route 172.17.71.0 255.255.255.192 172.17.71.1 
+ip route 172.17.71.64 255.255.255.192 172.17.71.65 
+ip route 172.17.71.128 255.255.255.192 172.17.71.129 
+ip route 172.17.71.192 255.255.255.224 172.17.71.193 
+ip route 172.17.71.224 255.255.255.224 172.17.71.225 
+!
+ip flow-export version 9
+!
+!
+!
+no cdp run
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

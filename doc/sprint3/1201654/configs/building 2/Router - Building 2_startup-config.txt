@@ -1,0 +1,183 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+ip dhcp excluded-address 172.17.68.193
+ip dhcp excluded-address 172.17.68.129
+ip dhcp excluded-address 172.17.68.1
+ip dhcp excluded-address 172.17.68.241
+!
+ip dhcp pool F0
+ network 172.17.68.192 255.255.255.224
+ default-router 172.17.68.193
+ dns-server 172.17.68.226
+ domain-name building-2.rcomp-21-22-dgg-g3
+ip dhcp pool F1
+ network 172.17.68.128 255.255.255.192
+ default-router 172.17.68.129
+ dns-server 172.17.68.226
+ domain-name building-2.rcomp-21-22-dgg-g3
+ip dhcp pool WiFi
+ network 172.17.68.0 255.255.255.128
+ default-router 172.17.68.1
+ dns-server 172.17.68.226
+ domain-name building-2.rcomp-21-22-dgg-g3
+ip dhcp pool VoIP
+ network 172.17.68.240 255.255.255.240
+ default-router 172.17.68.241
+ option 150 ip 172.17.68.241
+ dns-server 172.17.68.226
+ domain-name building-2.rcomp-21-22-dgg-g3
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017Z2VD-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/0.1
+ encapsulation dot1Q 306
+ ip address 172.17.68.193 255.255.255.224
+!
+interface FastEthernet0/0.2
+ encapsulation dot1Q 307
+ ip address 172.17.68.129 255.255.255.192
+!
+interface FastEthernet0/0.3
+ encapsulation dot1Q 308
+ ip address 172.17.68.1 255.255.255.128
+!
+interface FastEthernet0/0.4
+ encapsulation dot1Q 309
+ ip address 172.17.68.225 255.255.255.240
+!
+interface FastEthernet0/0.5
+ encapsulation dot1Q 310
+ ip address 172.17.68.241 255.255.255.240
+!
+interface FastEthernet0/0.6
+ encapsulation dot1Q 300
+ ip address 172.17.64.2 255.255.255.128
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 2
+ log-adjacency-changes
+ network 172.17.64.1 0.0.1.255 area 0
+ network 172.17.64.129 0.0.1.255 area 1
+ network 172.17.68.1 0.0.1.255 area 2
+ network 172.17.69.1 0.0.1.255 area 3
+ network 172.17.70.1 0.0.1.255 area 4
+ network 172.17.71.1 0.0.1.255 area 5
+!
+router rip
+!
+ip nat inside source static tcp 172.17.68.227 80 172.17.64.2 80 
+ip nat inside source static tcp 172.17.68.227 443 172.17.64.2 443 
+ip nat inside source static tcp 172.17.68.226 53 172.17.64.2 53 
+ip nat inside source static udp 172.17.68.226 53 172.17.64.2 53 
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+no cdp run
+!
+!
+!
+!
+!
+!
+dial-peer voice 1 voip
+ destination-pattern 0...
+ session target ipv4:172.17.64.1
+!
+dial-peer voice 2 voip
+ destination-pattern 2...
+ session target ipv4:172.17.64.3
+!
+dial-peer voice 3 voip
+ destination-pattern 3...
+ session target ipv4:172.17.64.4
+!
+dial-peer voice 4 voip
+ destination-pattern 4...
+ session target ipv4:172.17.64.5
+!
+telephony-service
+ no auto-reg-ephone
+ max-ephones 20
+ max-dn 20
+ ip source-address 172.17.68.241 port 2000
+!
+ephone-dn 1
+ number 1001
+!
+ephone-dn 2
+ number 1002
+!
+ephone 1
+ device-security-mode none
+ mac-address 00E0.A351.B290
+ type 7960
+ button 1:1
+!
+ephone 2
+ device-security-mode none
+ mac-address 00D0.D3CB.C110
+ type 7960
+ button 1:2
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
